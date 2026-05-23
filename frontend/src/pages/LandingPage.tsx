@@ -1,143 +1,381 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export default function LandingPage({ onGenerate }) {
 
-  const [openApi, setOpenApi] = useState("")
-  const [jiraInput, setJiraInput] = useState("")
+  const [jiraInput, setJiraInput] = useState("");
+  const [openApi, setOpenApi] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async () => {
+
+    if (!jiraInput) {
+      alert("Please enter Jira Requirement");
+      return;
+    }
+
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/generate-tests",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            code: `
+              OpenAPI:
+              ${openApi}
+
+              Jira Requirement:
+              ${jiraInput}
+            `,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        onGenerate(data);
+      } else {
+        alert("Failed to generate tests");
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Backend connection failed");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
 
   return (
 
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6 overflow-hidden relative">
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at top,#1e1b4b,#020617,#000)",
+        overflow: "hidden",
+        position: "relative",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "30px",
+        fontFamily: "Arial",
+      }}
+    >
 
-      {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-cyan-500 opacity-20 blur-[120px] rounded-full"></div>
+      {/* BLUE GLOW */}
 
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500 opacity-20 blur-[120px] rounded-full"></div>
+      <div
+        style={{
+          position: "absolute",
+          width: "500px",
+          height: "500px",
+          background: "#2563eb",
+          filter: "blur(180px)",
+          opacity: 0.25,
+          top: "-100px",
+          left: "-100px",
+          borderRadius: "50%",
+        }}
+      />
 
-      {/* Main Container */}
-      <div className="relative z-10 w-full max-w-5xl">
+      {/* PURPLE GLOW */}
 
-        {/* Badge */}
-        <div className="flex justify-center mb-6">
+      <div
+        style={{
+          position: "absolute",
+          width: "500px",
+          height: "500px",
+          background: "#c026d3",
+          filter: "blur(180px)",
+          opacity: 0.25,
+          bottom: "-120px",
+          right: "-120px",
+          borderRadius: "50%",
+        }}
+      />
 
-          <div className="px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-lg shadow-lg">
+      {/* MAIN CARD */}
 
-            <p className="text-lg font-semibold text-gray-200">
-              ✨ AI Powered QA Automation
-            </p>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1000px",
+          background: "rgba(15,23,42,0.65)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          backdropFilter: "blur(20px)",
+          borderRadius: "35px",
+          padding: "50px",
+          boxShadow:
+            "0 0 60px rgba(59,130,246,0.35)",
+          position: "relative",
+          zIndex: 2,
+        }}
+      >
 
+        {/* AI ONLINE */}
+
+        <div
+          style={{
+            position: "absolute",
+            top: "30px",
+            right: "40px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+
+          <div
+            style={{
+              width: "12px",
+              height: "12px",
+              borderRadius: "50%",
+              background: "#22c55e",
+              boxShadow: "0 0 15px #22c55e",
+            }}
+          />
+
+          <span
+            style={{
+              color: "#cbd5e1",
+              fontSize: "14px",
+            }}
+          >
+            AI Engine Online
+          </span>
+
+        </div>
+
+        {/* TOP BADGE */}
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+
+          <div
+            style={{
+              padding: "12px 24px",
+              borderRadius: "999px",
+              background:
+                "rgba(255,255,255,0.06)",
+              color: "#e2e8f0",
+              fontSize: "15px",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
+              marginBottom: "25px",
+            }}
+          >
+            ✨ AI Powered QA Automation
           </div>
 
         </div>
 
-        {/* Title */}
-        <h1 className="text-6xl md:text-8xl font-extrabold text-center mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 text-transparent bg-clip-text drop-shadow-[0_0_30px_rgba(59,130,246,0.8)]">
+        {/* TITLE */}
 
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "90px",
+            margin: 0,
+            fontWeight: "900",
+            lineHeight: 1,
+            background:
+              "linear-gradient(to right,#38bdf8,#818cf8,#d946ef)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow:
+              "0 0 40px rgba(59,130,246,0.6)",
+          }}
+        >
           TestGen AI
-
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-center text-gray-300 text-xl md:text-2xl mb-14">
+        {/* SUBTITLE */}
 
-          Generate intelligent test cases, fuzz testing & QA analytics instantly.
-
+        <p
+          style={{
+            textAlign: "center",
+            color: "#cbd5e1",
+            marginTop: "20px",
+            fontSize: "22px",
+            lineHeight: 1.7,
+          }}
+        >
+          Generate intelligent test cases, fuzz testing,
+          QA analytics & automation instantly using AI.
         </p>
 
-        {/* Form Container */}
-        <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[40px] p-8 md:p-12 shadow-[0_0_60px_rgba(59,130,246,0.15)]">
+        {/* FEATURE BOXES */}
 
-          {/* OpenAPI Section */}
-          <div className="mb-8">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+            gap: "20px",
+            marginTop: "40px",
+            marginBottom: "40px",
+          }}
+        >
 
-            <label className="block text-2xl font-semibold mb-4 text-cyan-300">
+          {[
+            "⚡ AI Test Generation",
+            "🛡 Edge Case Detection",
+            "🚀 Fast QA Automation",
+            "📊 Smart Coverage Reports",
+          ].map((item, index) => (
 
-              OpenAPI Specification
+            <div
+              key={index}
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                padding: "20px",
+                borderRadius: "20px",
+                color: "white",
+                textAlign: "center",
+                fontWeight: "bold",
+                boxShadow:
+                  "0 0 25px rgba(59,130,246,0.15)",
+              }}
+            >
+              {item}
+            </div>
 
-            </label>
-
-            <input
-              type="text"
-              value={openApi}
-              onChange={(e) => setOpenApi(e.target.value)}
-              placeholder="Paste OpenAPI URL..."
-              className="w-full bg-zinc-900/80 border border-zinc-700 rounded-3xl p-5 text-lg outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 transition-all"
-            />
-
-          </div>
-
-          {/* Jira Input */}
-          <div className="mb-10">
-
-            <label className="block text-2xl font-semibold mb-4 text-purple-300">
-
-              Jira Requirements
-
-            </label>
-
-            <textarea
-              rows="7"
-              value={jiraInput}
-              onChange={(e) => setJiraInput(e.target.value)}
-              placeholder="Paste Jira requirement..."
-              className="w-full bg-zinc-900/80 border border-zinc-700 rounded-3xl p-5 text-lg outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400 transition-all resize-none"
-            />
-
-          </div>
-
-          {/* Generate Button */}
-          <button
-            onClick={onGenerate}
-            className="w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-white text-2xl font-bold py-5 rounded-3xl shadow-[0_0_35px_rgba(59,130,246,0.5)] hover:scale-105 transition-all duration-300"
-          >
-
-            ⚡ Generate Intelligent Tests
-
-          </button>
+          ))}
 
         </div>
 
-        {/* Bottom Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+        {/* FORM CARD */}
 
-          {/* Card 1 */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center backdrop-blur-xl">
+        <div
+          style={{
+            marginTop: "20px",
+            background:
+              "rgba(255,255,255,0.03)",
+            borderRadius: "30px",
+            padding: "35px",
+            border:
+              "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
 
-            <h2 className="text-4xl font-bold text-cyan-400 mb-2">
-              124+
-            </h2>
+          {/* OPEN API */}
 
-            <p className="text-gray-300">
-              AI Tests Generated
-            </p>
+          <label
+            style={{
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "bold",
+            }}
+          >
+            OpenAPI Specification
+          </label>
 
-          </div>
+          <input
+            type="text"
+            value={openApi}
+            onChange={(e) => setOpenApi(e.target.value)}
+            placeholder="Paste OpenAPI URL..."
+            style={{
+              width: "100%",
+              marginTop: "12px",
+              padding: "18px",
+              borderRadius: "18px",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
+              background: "#0f172a",
+              color: "white",
+              fontSize: "16px",
+              outline: "none",
+              marginBottom: "30px",
+            }}
+          />
 
-          {/* Card 2 */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center backdrop-blur-xl">
+          {/* JIRA */}
 
-            <h2 className="text-4xl font-bold text-purple-400 mb-2">
-              87%
-            </h2>
+          <label
+            style={{
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "bold",
+            }}
+          >
+            Jira Requirements
+          </label>
 
-            <p className="text-gray-300">
-              Coverage Accuracy
-            </p>
+          <textarea
+            rows={8}
+            value={jiraInput}
+            onChange={(e) =>
+              setJiraInput(e.target.value)
+            }
+            placeholder="Paste Jira requirement..."
+            style={{
+              width: "100%",
+              marginTop: "12px",
+              padding: "22px",
+              borderRadius: "22px",
+              border:
+                "1px solid rgba(255,255,255,0.08)",
+              background: "#0f172a",
+              color: "white",
+              fontSize: "16px",
+              resize: "none",
+              outline: "none",
+            }}
+          />
 
-          </div>
+          {/* BUTTON */}
 
-          {/* Card 3 */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center backdrop-blur-xl">
-
-            <h2 className="text-4xl font-bold text-pink-400 mb-2">
-              24/7
-            </h2>
-
-            <p className="text-gray-300">
-              AI Monitoring
-            </p>
-
-          </div>
+          <button
+            onClick={handleGenerate}
+            style={{
+              width: "100%",
+              marginTop: "35px",
+              padding: "22px",
+              border: "none",
+              borderRadius: "22px",
+              background:
+                "linear-gradient(to right,#06b6d4,#3b82f6,#c026d3)",
+              color: "white",
+              fontSize: "22px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "0.3s",
+              boxShadow:
+                "0 0 45px rgba(59,130,246,0.65)",
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform =
+                "scale(1.02)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform =
+                "scale(1)";
+            }}
+          >
+            {loading
+              ? "Generating AI Test Cases..."
+              : "⚡ Generate Intelligent Tests"}
+          </button>
 
         </div>
 
@@ -145,5 +383,6 @@ export default function LandingPage({ onGenerate }) {
 
     </div>
 
-  )
+  );
+
 }

@@ -1,69 +1,108 @@
 export default function LoadingScreen() {
 
+  const steps = [
+    "Analyzing Requirements...",
+    "Generating AI Test Cases...",
+    "Running Fuzz Testing...",
+    "Preparing QA Analytics...",
+  ];
+
   return (
 
-    <div className="min-h-screen bg-black flex items-center justify-center text-white">
+    <div
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle,#111827,#000)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        position: "relative",
+        fontFamily: "Arial",
+      }}
+    >
 
-      <div className="bg-zinc-900 p-10 rounded-3xl w-[700px]">
+      {/* BACKGROUND GLOW */}
 
-        <h1 className="text-5xl font-bold text-cyan-400 text-center mb-8">
+      <div
+        style={{
+          position: "absolute",
+          width: "500px",
+          height: "500px",
+          background: "#2563eb",
+          filter: "blur(180px)",
+          opacity: 0.2,
+          borderRadius: "50%",
+        }}
+      />
+
+      <div
+        style={{
+          width: "700px",
+          background: "rgba(15,23,42,0.7)",
+          borderRadius: "35px",
+          padding: "45px",
+          backdropFilter: "blur(20px)",
+          border:
+            "1px solid rgba(255,255,255,0.08)",
+          position: "relative",
+          zIndex: 2,
+          boxShadow:
+            "0 0 50px rgba(59,130,246,0.35)",
+        }}
+      >
+
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "58px",
+            marginBottom: "45px",
+            background:
+              "linear-gradient(to right,#38bdf8,#d946ef)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           TestGen AI Processing...
         </h1>
 
-        {/* Progress Bar */}
-        <div className="w-full bg-zinc-800 rounded-full h-4 mb-8 overflow-hidden">
+        {steps.map((step, index) => (
 
-          <div className="bg-gradient-to-r from-cyan-400 to-purple-500 h-full w-[80%] animate-pulse rounded-full"></div>
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "30px",
+              color: "white",
+              fontSize: "24px",
+            }}
+          >
 
-        </div>
+            <span>{step}</span>
 
-        <div className="space-y-6">
-
-          <div className="flex items-center justify-between">
-
-            <p className="text-2xl">
-              Analyzing Requirements...
-            </p>
-
-            <div className="w-5 h-5 rounded-full bg-cyan-400 animate-pulse"></div>
-
-          </div>
-
-          <div className="flex items-center justify-between">
-
-            <p className="text-2xl">
-              Generating Test Cases...
-            </p>
-
-            <div className="w-5 h-5 rounded-full bg-blue-500 animate-pulse"></div>
-
-          </div>
-
-          <div className="flex items-center justify-between">
-
-            <p className="text-2xl">
-              Running Fuzz Testing...
-            </p>
-
-            <div className="w-5 h-5 rounded-full bg-purple-500 animate-pulse"></div>
+            <div
+              style={{
+                width: "18px",
+                height: "18px",
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(to right,#06b6d4,#c026d3)",
+                boxShadow:
+                  "0 0 20px rgba(59,130,246,0.8)",
+              }}
+            />
 
           </div>
 
-          <div className="flex items-center justify-between">
-
-            <p className="text-2xl">
-              Preparing Coverage Report...
-            </p>
-
-            <div className="w-5 h-5 rounded-full bg-pink-500 animate-pulse"></div>
-
-          </div>
-
-        </div>
+        ))}
 
       </div>
 
     </div>
 
-  )
+  );
+
 }
