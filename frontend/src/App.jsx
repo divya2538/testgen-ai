@@ -1,35 +1,37 @@
-import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
+
   const [results, setResults] = useState(null);
 
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={<LandingPage onGenerate={(data) => setResults(data)} />}
-      />
+  const handleGenerate = (data) => {
 
-      <Route
-        path="/dashboard"
-        element={
-          <Dashboard
-            results={
-              results || {
-                tests: [],
-                coverage: 87,
-                bugsFound: 4,
-                edgeCases: 6,
-              }
-            }
-          />
-        }
-      />
-    </Routes>
+    setResults({
+      testsGenerated: 24,
+      coverage: 87,
+      bugsFound: 6,
+      edgeCases: 14,
+      generatedCode: data.tests,
+    });
+
+  };
+
+  return (
+
+    <div>
+
+      {!results ? (
+        <LandingPage onGenerate={handleGenerate} />
+      ) : (
+        <Dashboard results={results} />
+      )}
+
+    </div>
+
   );
+
 }
 
 export default App;
