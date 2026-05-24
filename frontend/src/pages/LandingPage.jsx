@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage({ onGenerate }) {
+
   const [jiraInput, setJiraInput] = useState("");
   const [openApi, setOpenApi] = useState("");
   const [loading, setLoading] = useState(false);
@@ -9,67 +10,148 @@ export default function LandingPage({ onGenerate }) {
   const navigate = useNavigate();
 
   const handleGenerate = async () => {
-    if (!jiraInput) {
+
+    if (!jiraInput.trim()) {
+
       alert("Please enter Jira Requirement");
       return;
     }
 
     try {
+
       setLoading(true);
 
-      const response = await fetch("http://127.0.0.1:8000/generate-tests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code: `
+      console.log("Sending request to backend...");
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/generate-tests",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            code: `
 OpenAPI:
 ${openApi}
 
 Jira Requirement:
 ${jiraInput}
-          `,
-        }),
-      });
+            `,
+          }),
+        }
+      );
 
+      console.log("Response Status:", response.status);
+
+      // BACKEND FAILED
+      if (!response.ok) {
+
+        const errorText = await response.text();
+
+        console.log("Backend Error:", errorText);
+
+        alert(errorText);
+
+        return;
+      }
+
+      // PARSE RESPONSE
       const data = await response.json();
 
+      console.log("Backend Data:", data);
+
+      // SUCCESS
       if (data.status === "success") {
-        onGenerate(data);
+
+        onGenerate({
+          tests: data.tests || [],
+          coverage: data.coverage || 0,
+          bugsFound: data.bugsFound || 0,
+          edgeCases: data.edgeCases || 0,
+        });
+
         navigate("/dashboard");
+
       } else {
-        alert("Failed to generate tests");
+
+        console.log("FULL BACKEND RESPONSE:", data);
+
+        alert(data.message || "Failed to generate tests");
       }
+
     } catch (error) {
-      console.log(error);
-      alert("Backend connection failed");
+
+      console.log("Frontend Error:", error);
+
+      alert(error.message || "Backend connection failed");
+
     } finally {
+
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: 40, color: "white", background: "#000", minHeight: "100vh" }}>
-      <h1>TestGen AI</h1>
 
-      <input
-        placeholder="OpenAPI URL"
-        value={openApi}
-        onChange={(e) => setOpenApi(e.target.value)}
-        style={{ width: "100%", padding: 10, marginTop: 10 }}
-      />
+    <div className="landing-container">
 
-      <textarea
-        placeholder="Jira Requirement"
-        value={jiraInput}
-        onChange={(e) => setJiraInput(e.target.value)}
-        style={{ width: "100%", padding: 10, marginTop: 10, height: 150 }}
-      />
+      <div className="particles"></div>
 
-      <button onClick={handleGenerate} style={{ marginTop: 20, padding: 10 }}>
-        {loading ? "Generating..." : "Generate Tests"}
-      </button>
+      <div className="navbar">
+        <h1 className="logo">TestGen AI</h1>
+      </div>
+
+      <div className="hero-section">
+
+        <div className="badge">
+          Autonomous QA Generation Platform
+        </div>
+
+        <h1 className="hero-title">
+          AI Powered <span className="gradient-text">Test Generation</span>
+        </h1>
+
+        <p className="hero-description">
+          Generate unit tests, API tests, edge cases,
+          Playwright suites, and security checks
+          automatically using AI.
+        </p>
+
+      </div>
+
+      <div className="glass-panel">
+
+        <h2 className="panel-title">
+          Generate AI Tests
+        </h2>
+
+        <input
+          placeholder="OpenAPI URL"
+          value={openApi}
+          onChange={(e) => setOpenApi(e.target.value)}
+          className="ai-input"
+        />
+
+        <textarea
+          placeholder="Enter Jira Requirement"
+          value={jiraInput}
+          onChange={(e) => setJiraInput(e.target.value)}
+          className="ai-textarea"
+        />
+
+        <button
+          onClick={handleGenerate}
+          className="primary-btn generate-btn pulse-btn"
+          disabled={loading}
+        >
+          {loading ? "Generating..." : "Generate Tests"}
+        </button>
+
+      </div>
+
     </div>
   );
 }

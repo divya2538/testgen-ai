@@ -9,11 +9,10 @@ function App() {
   const handleGenerate = (data) => {
 
     setResults({
-      testsGenerated: 24,
-      coverage: 87,
-      bugsFound: 6,
-      edgeCases: 14,
-      generatedCode: data.tests,
+      tests: data.tests,
+      coverage: data.coverage,
+      bugsFound: data.bugsFound,
+      edgeCases: data.edgeCases,
     });
 
   };
