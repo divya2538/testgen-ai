@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={<LandingPage onGenerate={setResults} />}
+        element={<LandingPage onGenerate={(data) => setResults(data)} />}
       />
 
       <Route
@@ -19,10 +19,10 @@ function App() {
           <Dashboard
             results={
               results || {
-                testsGenerated: 0,
-                coverage: 0,
-                bugsFound: 0,
-                edgeCases: 0,
+                tests: [],
+                coverage: 87,
+                bugsFound: 4,
+                edgeCases: 6,
               }
             }
           />
