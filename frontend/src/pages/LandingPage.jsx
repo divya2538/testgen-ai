@@ -24,7 +24,7 @@ export default function LandingPage({ onGenerate }) {
       console.log("Sending request to backend...");
 
       const response = await fetch(
-        "http://127.0.0.1:8000/generate-tests",
+        ""https://testgen-ai-backend.onrender.com/generate-tests",",
         {
           method: "POST",
 
