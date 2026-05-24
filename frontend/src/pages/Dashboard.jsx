@@ -1,45 +1,18 @@
 export default function Dashboard({ results }) {
-
-  if (!results) {
-    return (
-      <div style={{ padding: "40px", color: "white" }}>
-        No results yet. Go back and generate tests.
-      </div>
-    );
-  }
-
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#0f172a",
-      color: "white",
-      padding: "40px",
-      fontFamily: "Arial"
-    }}>
+    <div style={{ padding: 40, color: "white", background: "#000", minHeight: "100vh" }}>
+      <h1>Dashboard</h1>
 
-      <h1>TestGen AI Dashboard 🚀</h1>
+      <h2>Tests Generated: {results?.tests?.length || 0}</h2>
+      <h2>Coverage: {results?.coverage || 0}%</h2>
+      <h2>Bugs Found: {results?.bugsFound || 0}</h2>
+      <h2>Edge Cases: {results?.edgeCases || 0}</h2>
 
-      <div style={{ marginTop: "20px" }}>
-        <h2>Stats</h2>
+      <h3>Generated Tests:</h3>
 
-        <p>Tests Generated: {results.testsGenerated}</p>
-        <p>Coverage: {results.coverage}%</p>
-        <p>Bugs Found: {results.bugsFound}</p>
-        <p>Edge Cases: {results.edgeCases}</p>
-      </div>
-
-      <div style={{ marginTop: "30px" }}>
-        <h2>Generated Tests</h2>
-
-        <pre style={{
-          background: "#1e293b",
-          padding: "20px",
-          whiteSpace: "pre-wrap"
-        }}>
-          {results.rawTests}
-        </pre>
-      </div>
-
+      <pre style={{ background: "#111", padding: 20 }}>
+        {results?.tests || "No tests generated yet"}
+      </pre>
     </div>
   );
 }
