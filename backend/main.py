@@ -51,11 +51,10 @@ def generate_tests(request: TestRequest):
 
     user_input = request.code.lower()
 
-    generated_tests = f"""
+    generated_tests = """
 import unittest
 
 class TestGeneratedModule(unittest.TestCase):
-
 """
 
     # LOGIN FEATURES
@@ -69,7 +68,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_successful_login(self):
         self.assertTrue(True)
-
 """
 
     # PAYMENT FEATURES
@@ -83,7 +81,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_failed_transaction(self):
         self.assertTrue(True)
-
 """
 
     # CART FEATURES
@@ -97,7 +94,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_total_price(self):
         self.assertTrue(True)
-
 """
 
     # SEARCH FEATURES
@@ -108,7 +104,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_empty_search(self):
         self.assertTrue(True)
-
 """
 
     # API FEATURES
@@ -119,7 +114,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_api_timeout(self):
         self.assertTrue(True)
-
 """
 
     # VALIDATION FEATURES
@@ -130,7 +124,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_invalid_inputs(self):
         self.assertTrue(True)
-
 """
 
     # RESPONSIVE UI
@@ -141,7 +134,6 @@ class TestGeneratedModule(unittest.TestCase):
 
     def test_tablet_view(self):
         self.assertTrue(True)
-
 """
 
     # DEFAULT TESTS
