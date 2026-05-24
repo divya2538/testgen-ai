@@ -1,132 +1,250 @@
-# TestGen AI 🚀
+TestGen AI
 
-AI-powered autonomous QA test generation platform for modern development teams.
+AI-powered QA test generation platform built for hackathons and rapid testing workflows.
 
-## Overview
+Overview
 
-TestGen AI is an autonomous AI agent that automatically generates test cases from product requirements, OpenAPI specifications, and frontend routes.
+TestGen AI helps QA teams and developers generate:
 
-The platform helps developers and QA teams reduce manual testing effort, improve test coverage, and discover hidden edge cases before production deployment.
+Functional test cases
 
----
+API test scenarios
 
-## Problem Statement
+Validation tests
 
-Manual test creation is time-consuming and often misses critical edge cases. Existing testing tools automate execution but do not intelligently generate tests from requirements or APIs.
+Security test cases
 
-TestGen AI solves this problem using AI-powered autonomous test generation.
+Edge-case coverage
 
----
+Boundary testing scenarios
 
-## Features ✨
 
-- AI-generated test cases
-- OpenAPI/Swagger parsing
-- Automated API testing
-- Edge-case discovery
-- Frontend flow testing
-- Fuzz testing support
-- Playwright/Cypress test generation
-- Test coverage dashboard
+The platform accepts Jira-style requirements and OpenAPI specifications, then generates structured test cases automatically through an interactive dashboard.
+
 
 ---
 
-## Tech Stack 🛠️
+Features
 
-### Frontend
-- React
-- TypeScript
-- Tailwind CSS
+AI-style automated test generation
 
-### Backend
-- FastAPI
-- Python
-- LangChain
+Functional + API + security test coverage
 
-### AI & Automation
-- OpenAI API
-- Playwright
-- OpenAPI Parser
+Interactive dashboard UI
 
----
+Pytest export support
 
-## Architecture
+Playwright export support
 
-```txt
-User → Frontend Dashboard → Backend API → AI Engine
-→ OpenAPI Parser → Test Generator → Results Dashboard
-```
+FastAPI backend
+
+React + Vite frontend
+
+Modern glassmorphism UI
+
+Real-time QA metrics dashboard
+
+
 
 ---
 
-## How It Works ⚙️
+Tech Stack
 
-1. Upload API specifications or requirements
-2. AI analyzes endpoints and frontend routes
-3. TestGen AI generates automated test cases
-4. Edge cases and vulnerabilities are detected
-5. Results are displayed on the dashboard
+Frontend
+
+React
+
+Vite
+
+Tailwind CSS
+
+React Router
+
+
+Backend
+
+FastAPI
+
+Python
+
+Uvicorn
+
+
 
 ---
 
-## Installation 💻
+Project Structure
 
-### Clone Repository
+testgen-ai/
+│
+├── backend/
+│   ├── main.py
+│   ├── services/
+│   │   ├── ai_generator.py
+│   │   ├── edge_cases.py
+│   │   ├── export_service.py
+│   │   └── openapi_parser.py
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── pages/
+│   │   │   ├── LandingPage.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   └── LoadingScreen.jsx
+│   │   └── index.css
 
-```bash
+
+---
+
+Installation
+
+Clone Repository
+
 git clone https://github.com/divya2538/testgen-ai.git
-```
 
-### Frontend Setup
+cd testgen-ai
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
 
-### Backend Setup
+---
 
-```bash
+Backend Setup
+
 cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+
+pip install fastapi uvicorn python-dotenv
+
+Run backend:
+
+python -m uvicorn main:app --reload
+
+Backend runs at:
+
+http://127.0.0.1:8000
+
 
 ---
 
-## Future Improvements 🚀
+Frontend Setup
 
-- CI/CD integration
-- AI auto-fix suggestions
-- Real-time monitoring
-- Accessibility testing
-- Multi-language support
+Open a new terminal:
 
----
+cd frontend
 
-## Demo Video 🎥
+npm install
 
-Demo link will be added here.
+npm run dev
 
----
+Frontend runs at:
 
-## Screenshots 📸
+http://localhost:5174
 
-Screenshots of dashboard and test generation workflow will be added here.
 
 ---
 
-## Impact 🌍
+API Endpoint
 
-TestGen AI helps startups and development teams:
-- Reduce manual QA effort
-- Improve test coverage
-- Detect hidden vulnerabilities
-- Accelerate CI/CD workflows
+Generate Tests
+
+POST
+
+/generate-tests
+
+Request Body
+
+{
+  "code": "OpenAPI and Jira Requirement"
+}
+
+Response
+
+{
+  "status": "success",
+  "tests": [],
+  "coverage": 92,
+  "bugsFound": 5,
+  "edgeCases": 14
+}
+
 
 ---
 
-## License
+Sample Input
 
-MIT License
+OpenAPI URL
+
+https://api.sampleapis.com/futurama/info
+
+Jira Requirement
+
+Build a secure login system for users.
+
+Requirements:
+- Email validation
+- Password validation
+- Invalid login handling
+- Session timeout
+- SQL injection prevention
+- API timeout handling
+
+
+---
+
+Screens Included
+
+Landing Page
+
+AI Processing UI
+
+Dashboard Analytics
+
+Generated Test Cases
+
+Export Buttons
+
+
+
+---
+
+Future Improvements
+
+Real AI integration
+
+OpenAI / Gemini support
+
+PDF export
+
+Jira integration
+
+CI/CD integration
+
+Selenium automation generation
+
+AI bug prediction
+
+Database test generation
+
+
+
+---
+
+Hackathon Focus
+
+This project was built for rapid QA automation and AI-assisted testing workflows during a 2-day hackathon environment.
+
+Main focus areas:
+
+Usability
+
+UI/UX
+
+QA automation
+
+AI-inspired workflows
+
+Exportable testing artifacts
+
+
+
+---
+
