@@ -8,7 +8,6 @@ function App() {
 
   return (
     <Routes>
-
       <Route
         path="/"
         element={<LandingPage onGenerate={setResults} />}
@@ -16,9 +15,8 @@ function App() {
 
       <Route
         path="/dashboard"
-        element={results ? <Dashboard results={results} /> : <LandingPage onGenerate={setResults} />}
+        element={<Dashboard results={results} />}
       />
-
     </Routes>
   );
 }
